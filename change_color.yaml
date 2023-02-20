@@ -1,0 +1,15 @@
+- name: Change_Color_in_The_Terminal
+  hosts: all
+  become: yes
+
+  tasks:
+  - name: Change Config
+    lineinfile:
+      dest: "{{ item }}"
+      regexp: 'PS1="\\\[\\e]0;\$\{debian_chroot:\+\(\$debian_chroot\)}\\u@\\h: \\w\\a\\]\$PS1"'
+      line: '    PS1="[\[\e[0;35m\]\u\[\e[0m\]@\[\e[0;36m\]\h\[\e[0m\] \W]\$ "'
+      state: present
+      
+    loop:
+      - /home/user/.bashrc
+      - /root/.bashrc
